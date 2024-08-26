@@ -1,32 +1,44 @@
-tasks = []
-
-def add_task():
-    task = input('Enter your task:')
-    tasks.append(task)
-    print(f"Task '{task}' added")
-    
-def view_task():
-    if tasks:
-        print("Your tasks:")
-        for i, task in enumerate(tasks, 1):
-            print(f"{i}. {task}")
-    else:
-        print("No tasks yet.")
-
+class Task:
+    def __init__(self,description):
+        self.description = description
+        
+    def __str__(self):
+        return self.description
     
         
-def delete_task():
-    view_task()
-    if tasks:
-        task_num = int(input("Enter the task number to delete:"))
-        if 0 < task_num <= len(tasks):
-            removed = tasks.pop(task_num - 1)
+class TodoList:
+    def __init__(self):
+        self.tasks = []
+
+
+
+
+
+    def add_task(self, task_description):
+        task = Task(task_description)
+        self.tasks.append(task)
+        print(f"Task '{task}' added")
+        
+    def view_task(self):
+        if self.tasks:
+            print("Your tasks:")
+            for i, task in enumerate(self.tasks, 1):
+                print(f"{i}. {task}")
+        else:
+            print("No tasks yet.")
+
+        
+            
+    def delete_task(self, task_number):
+        if 0 < task_number <= len(self.tasks):
+            removed = self.tasks.pop(task_number - 1)
             print(f"Task '{removed}' deleted.")
         else:
             print("Invalid task number")
 
 
 def main():
+    todo_list = TodoList()
     while True:
         print("\nTo-Do List Menu")
         print("1. Add Task")
@@ -37,11 +49,14 @@ def main():
         
         
         if choice == '1':
-            add_task()
+            description = input("Enter the task description: ")
+            todo_list.add_task(description)
         elif choice == '2':
-            view_task()
+            todo_list.view_task()
         elif choice == '3':
-            delete_task()
+            todo_list.view_task()
+            task_number = int(input("Enter the task number to delete: "))
+            todo_list.delete_task(task_number)
         elif choice == '4':
             print("Goodbye!")
             break
